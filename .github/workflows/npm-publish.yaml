@@ -23,7 +23,6 @@ jobs:
       #     yarn install --frozen-lockfile
       #     yarn build
       #     npm version patch
-      - run: npm version patch
       - name: Extract version from package.json
         uses: sergeysova/jq-action@v2
         id: version
