@@ -34,7 +34,8 @@ jobs:
         run: 'echo "version ${{ steps.version.outputs.value }}"'
       - name: Commit and push
         run: |
-          git commit -am "update - ${{ steps.version.outputs.value }}"
+          git add .
+          git commit -m "update - ${{ steps.version.outputs.value }}"
           git push
       - name: Publish
         run: |
