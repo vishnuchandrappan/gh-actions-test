@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
+      run: |
+          git config --global user.name "github-action"
+          git config --global user.email "action@github.com"
       - name: Install & build
         run: |
           yarn install --frozen-lockfile
@@ -28,10 +31,8 @@ jobs:
           cmd: "jq .version package.json -r"
       - name: Show my version
         run: 'echo "version ${{ steps.version.outputs.value }}"'
-      - name: Push updated version
+      - name: Commit and push
         run: |
-          git config --global user.name "github-action"
-          git config --global user.email "action@github.com"
           git commit -am "update - ${{ steps.version.outputs.value }}"
           git push
       - name: Publish
