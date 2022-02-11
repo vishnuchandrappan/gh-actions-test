@@ -17,9 +17,10 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
-      run: |
-          git config --global user.name "github-action"
-          git config --global user.email "action@github.com"
+      - name: set git config
+        run: |
+          git config user.name "github-action"
+          git config user.email "action@github.com"
       - name: Install & build
         run: |
           yarn install --frozen-lockfile
