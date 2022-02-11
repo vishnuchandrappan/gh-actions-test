@@ -19,7 +19,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - name: Install & build
         run: |
-          cd node
           yarn install --frozen-lockfile
           yarn build
           npm version patch
@@ -36,7 +35,6 @@ jobs:
           git push
       - name: Publish
         run: |
-          cd node
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
