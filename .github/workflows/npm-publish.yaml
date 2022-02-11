@@ -19,9 +19,9 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - name: Install & build
         run: |
-          cd node
-          yarn install --frozen-lockfile
-          yarn build
+          # cd node
+          # yarn install --frozen-lockfile
+          # yarn build
           npm version patch
       - name: Extract version from package.json
         uses: sergeysova/jq-action@v2
@@ -34,9 +34,9 @@ jobs:
           git config user.email action@github.com
           git commit -am "update - ${{ steps.version.outputs.value }}"
           git push
-      - name: Publish
-        run: |
-          cd node
-          # npm publish
+        # - name: Publish
+        #   run: |
+        #     cd node
+        #     npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
