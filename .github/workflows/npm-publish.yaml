@@ -1,13 +1,15 @@
 name: Publish Node.js Package
 
 on:
-  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
   buildAndPublish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
     steps:
       - uses: actions/checkout@v2
@@ -20,11 +22,21 @@ jobs:
           cd node
           yarn install --frozen-lockfile
           yarn build
-          npm version prerelease --preid="$(git rev-parse HEAD)"
-
+          npm version patch
+      - name: Extract version from package.json
+        uses: sergeysova/jq-action@v2
+        id: version
+        with:
+          cmd: "jq .version package.json -r"
+      - name: Push updated version
+        run: |
+          git config user.name github-action
+          git config user.email action@github.com
+          git commit -am "update - ${{ steps.version.outputs.value }}"
+          git push
       - name: Publish
         run: |
           cd node
-          npm publish --tag beta
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
